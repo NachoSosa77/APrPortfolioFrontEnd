@@ -14,6 +14,8 @@ import { ProjectsComponent } from './components/projects/projects.component';
 import { LoginComponent } from './components/login/login.component';
 import { PortfolioComponent } from './components/portfolio/portfolio.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { ExperModalComponent } from './components/exper-modal/exper-modal.component';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -27,12 +29,14 @@ import { ReactiveFormsModule } from '@angular/forms';
     SkillsComponent,
     ProjectsComponent,
     LoginComponent,
-    PortfolioComponent
+    PortfolioComponent,
+    ExperModalComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
