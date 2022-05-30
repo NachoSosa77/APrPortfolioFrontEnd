@@ -1,35 +1,26 @@
-<div class="card mt-5 position-absolute top-50 start-50 translate-middle " style="width: 40rem;">
-  <h1 class="m-5 ">Login</h1>
-  <form [formGroup]="form" class="m-5" (ngSubmit)="onSend($event)">
+<div
+  class="card mt-5 position-absolute top-50 start-50 translate-middle"
+  style="width: 40rem"
+>
+  <h1 class="m-5">Login</h1>
+  <form>
     <div class="mb-3">
       <label for="exampleInputEmail1" class="form-label">Email</label>
-      <input formControlName="email"
-        [ngClass]="{'is-invalid': Email?.errors && Email?.touched, 'is-valid': !Email?.touched}" type="email"
-        class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" />
-      <div *ngIf="Email?.errors && Email?.touched">
-        <p *ngIf="Email?.hasError('required')" class="text-danger">
-          El mail es requerido
-        </p>
-        <p *ngIf="Email?.hasError('email')" class="text-danger">
-          El formato de email debe ser válido.
-        </p>
-
-      </div>
+      <input
+        formControlName="email"
+        class="form-control"
+        id="exampleInputEmail1"
+        aria-describedby="emailHelp"
+      />
     </div>
     <div class="mb-3">
       <label for="exampleInputPassword1" class="form-label">Password</label>
-      <input formControlName="password"
-        [ngClass]="{'is-invalid': Password?.errors && Password?.touched, 'is-valid': !Password?.touched}"
-        type="password" class="form-control" id="exampleInputPassword1" />
-      <div *ngIf="Password?.errors && Password?.touched">
-        <p *ngIf="Password?.hasError('required')" class="text-danger">
-          La contraseña es requerida.
-        </p>
-        <p *ngIf="Password?.errors?.['minlength']" class="text-danger">
-          La contraseña debe ser de 8 o más caracteres.
-        </p>
-
-      </div>
+      <input
+        formControlName="password"
+        type="password"
+        class="form-control"
+        id="exampleInputPassword1"
+      />
     </div>
 
     <button type="submit" class="btn btn-primary">Login</button>
