@@ -1,35 +1,60 @@
-<div class="container mt-3">
+<div class="container mt-3" id="main-container">
   <div class="card mx-auto" style="width: 800px">
     <div class="card-body">
       <div class="edit-btn">
         <h3 class="card-title">Educación.</h3>
+        <div>
+        <button
+          type="button"
+          class="btn btn-outline-dark m-1"
+          data-bs-toggle="modal"
+          data-bs-target="#addEducationModal"
+          (click)="openModal('add')"
+        >
+          <i class="bi bi-plus-lg"></i>
+        </button>
         <button class="btn btn-outline-dark m-1">
           <i class="bi bi-pencil"></i>
         </button>
       </div>
+      </div>
 
-      <div class="card mt-3" >
+      <div *ngFor="let education of educations" class="card mt-3">
         <div class="row g-0 m-3">
           <div class="col-md-3">
-            <img src="../../../assets/img/coderLogo.jpg" class="img-fluid rounded-start" alt="..." />
+            <img
+              src="{{ education?.img_educ }}"
+              class="img-fluid rounded-start"
+              alt="..."
+            />
           </div>
           <div class="col-md-9">
             <div class="card-body">
               <div class="edit-btn">
-                <h4 class="card-title">Coder House.</h4>
-                <button class="btn btn-outline-dark m-1">
+                <h4 class="card-title">{{ education?.educ_title }}</h4>
+                <button
+                  class="btn btn-outline-dark m-1"
+                  data-bs-toggle="modal"
+                  data-bs-target="#editEducationModal"
+                  (click)="openModal('edit', education)"
+                >
                   <i class="bi bi-pencil"></i>
                 </button>
               </div>
 
               <div class="edit-btn justify-content-end">
-                <button class="btn btn-outline-dark m-1">
+                <button
+                  class="btn btn-outline-dark m-1"
+                  data-bs-toggle="modal"
+                  data-bs-target="#deleteEducationModal"
+                  (click)="openModal('delete', education)"
+                >
                   <i class="bi bi-trash"></i>
                 </button>
               </div>
-              <h5>Periodo:</h5>
-              <h6>Curso React Js.</h6>
-              <p class="card-text">Realización de tareas administrativas.</p>
+              <h5>Desde: {{ education?.educ_start }}</h5>
+              <h5>Hasta: {{ education?.educ_end }}</h5>
+              <p class="card-text">{{ education?.educ_description }}.</p>
             </div>
           </div>
         </div>
@@ -37,4 +62,253 @@
     </div>
   </div>
 </div>
+
+<!--Add education Modal-->
+
+<div
+  class="modal fade"
+  id="addEducationModal"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+  tabindex="-1"
+  aria-labelledby="addEducationModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">
+          Añadir educación.
+        </h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form #addForm="ngForm" (ngSubmit)="onAddeducation(addForm)">
+          <div class="form-group mt-2">
+            <label for="educ_title">Institución educativa</label>
+            <input
+              type="text"
+              ngModel
+              name="educ_title"
+              class="form-control"
+              id="educ_title"
+              placeholder="P. ej. Universidad del Salvador"
+              required
+            />
+          </div>
+          <div class="form-group mt-2">
+            <label for="educ_description">Descripción:</label>
+            <input
+              type="text-area"
+              ngModel
+              name="educ_description"
+              class="form-control"
+              id="educ_description"
+              required
+            />
+          </div>
+          <div class="form-group mt-2">
+            <label for="educ_start">Fecha de inicio:</label>
+            <input
+              type="date"
+              ngModel
+              name="educ_start"
+              class="form-select"
+              id="educ_start"
+            />
+          </div>
+
+          <div class="form-group mt-2">
+            <label for="educ_end">Fecha de finalización (o prevista):</label>
+          </div>
+          <div class="input-group mb-3">
+            <input
+              type="date"
+              ngModel
+              name="educ_end"
+              class="form-select"
+              id="educ_end"
+            />
+          </div>
+
+          <div class="form-group mt-2">
+            <label for="img_educ">Contenido multimedia:</label>
+            <input
+              type="text"
+              ngModel
+              name="img_educ"
+              class="form-control"
+              id="img_educ"
+              required
+            />
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary">Guardar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--Edit education Modal-->
+
+<div
+  class="modal fade"
+  id="editEducationModal"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+  tabindex="-1"
+  aria-labelledby="editEducationModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editEducationModalLabel">
+          Editar educación.
+        </h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form #editForm="ngForm">
+          <div>
+            <input
+              type="hidden"
+              ngModel="{{ editEducation?.idEduc }}"
+              name="ideduc"
+              class="form-control"
+              id="ideduc"
+              placeholder=""
+            />
+          </div>
+          <div class="form-group mt-2">
+            <label for="educ_title">Institución educativa</label>
+            <input
+              type="text"
+              ngModel="{{ editEducation?.educ_title }}"
+              name="educ_title"
+              class="form-control"
+              id="educ_title"
+              placeholder="P. ej. Microsoft"
+              required
+            />
+          </div>
+          <div class="form-group mt-2">
+            <label for="educ_description">Descripción:</label>
+            <input
+              type="text"
+              ngModel="{{ editEducation?.educ_description }}"
+              name="educ_description"
+              class="form-control"
+              id="educ_description"
+              required
+            />
+          </div>
+          <div class="form-group mt-2">
+            <label for="educ_start">Fecha de inicio:</label>
+            <input
+              type="date"
+              ngModel="{{ editEducation?.educ_start }}"
+              name="educ_start"
+              class="form-select"
+              id="educ_start"
+            />
+          </div>
+
+          <div class="form-group mt-2">
+            <label for="educ_end">Fecha de finalización:</label>
+          </div>
+          <div class="input-group mb-3">
+            <input
+              type="date"
+              ngModel="{{ editEducation?.educ_end }}"
+              name="educ_end"
+              class="form-select"
+              id="educ_end"
+            />
+          </div>
+
+          <div class="form-group mt-2">
+            <label for="img_educ">Contenido multimedia:</label>
+            <input
+              type="text"
+              ngModel="{{ editEducation?.img_educ }}"
+              name="img_educ"
+              class="form-control"
+              id="img_educ"
+              required
+            />
+          </div>
+          <div class="modal-footer">
+            <button
+              class="btn btn-primary"
+              (click)="updateEducation(editForm.value)"
+              data-dismiss="modal"
+            >
+              Guardar los cambios
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--Delete education Modal-->
+<div
+  class="modal fade"
+  id="deleteEducationModal"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+  tabindex="-1"
+  aria-labelledby="deleteEducationModallLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteEducationModalLabel">
+          Eliminar educiencia.
+        </h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <p>¿Está seguro de eliminar los datos?</p>
+      </div>
+      <div class="modal-footer">
+        <button
+          class="btn btn-danger"
+          (click)="onDeleteEducation(deleteEdu?.idEduc!)"
+          data-dismiss="modal"
+        >
+          Eliminar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Notification for no employees -->
+<!-- <div *ngIf="educations?.length == 0" class="col-lg-12 col-md-12 col-xl-12">
+    <div class="alert alert-info" role="alert">
+      <h4 class="alert-heading">No hay educiencias cargardas.</h4>
+    </div>
+  </div> -->
+
 

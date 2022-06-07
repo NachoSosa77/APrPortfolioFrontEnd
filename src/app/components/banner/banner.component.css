@@ -1,10 +1,5 @@
-.edit-pencil {
+.edit-btn {
   display: flex;
   flex-direction: row;
-  justify-content: flex-end;
-}
-
-.container-fluid {
-  margin-left: 200px;
-
+  justify-content: space-between;
 }

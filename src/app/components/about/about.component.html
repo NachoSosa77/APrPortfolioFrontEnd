@@ -1,4 +1,4 @@
-<div class="card-body" style="width: 800px">
+<div class="card-body" style="width: 800px" *ngFor="let user of user">
   <img src="{{ user.user_img }}" class="photo-perfil" alt="..." />
   <div class="card-body">
     <div class="edit-btn">
@@ -6,8 +6,8 @@
         type="button"
         class="btn btn-outline-dark m-1"
         data-bs-toggle="modal"
-        data-bs-target="#addAboutModal"
-        (click)="openModal('add')"
+        data-bs-target="#editAboutModal"
+        (click)="openModal('edit')"
       >
         <i class="bi bi-pencil"></i>
       </button>
@@ -27,36 +27,32 @@
   <p class="card-text">{{ user.user_description }}</p>
 </div>
 
-<!-- Add About Modal -->
+<!-- Edit About Modal -->
 <div
   class="modal fade"
-  id="addAboutModal"
-  data-bs-backdrop="static"
-  data-bs-keyboard="false"
+  id="editAboutModal"
   tabindex="-1"
-  aria-labelledby="addAboutModalLabel"
+  aria-labelledby="editAboutModalLabel"
   aria-hidden="true"
 >
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="staticBackdropLabel">Nuevo usuario.</h5>
+        <h5 class="modal-title" id="editAboutModalLabel">Actualizar datos.</h5>
         <button
           type="button"
           class="btn-close"
           data-bs-dismiss="modal"
           aria-label="Close"
-        >
-          &times;
-        </button>
+        ></button>
       </div>
       <div class="modal-body">
-        <form #addForm="ngForm" (ngSubmit)="onAddAbout(addForm)">
+        <form #editForm="ngForm">
           <div class="form-group mt-2">
             <label for="user_name">Nombre:</label>
             <input
               type="text"
-              ngModel
+              ngModel="{{ deleteAbout?.user_name }}"
               name="user_name"
               class="form-control"
               id="user_name"
@@ -68,7 +64,7 @@
             <label for="user_surname">Apellido:</label>
             <input
               type="text"
-              ngModel
+              ngModel="{{ deleteAbout?.user_surname }}"
               name="user_surname"
               class="form-control"
               id="user_surname"
@@ -80,7 +76,7 @@
             <label for="user_title">Titulo:</label>
             <input
               type="text"
-              ngModel
+              ngModel="{{ deleteAbout?.user_title }}"
               name="user_title"
               class="form-control"
               id="user_title"
@@ -93,7 +89,7 @@
             <label for="user_description">Descripción:</label>
             <input
               type="text"
-              ngModel
+              ngModel="{{ deleteAbout?.user_description }}"
               name="user_description"
               class="form-control"
               id="user_description"
@@ -105,7 +101,7 @@
             <label for="user_img">Imagen Url:</label>
             <input
               type="text"
-              ngModel
+              ngModel="{{ deleteAbout?.user_img }}"
               name="user_img"
               class="form-control"
               id="user_img"
@@ -122,8 +118,8 @@
               Cerrar
             </button>
             <button
-              [disabled]="addForm.invalid"
-              type="submit"
+              [disabled]="editForm.invalid"
+              (click)="updateAbout(editForm.value)"
               class="btn btn-primary"
             >
               Guardar
@@ -134,12 +130,10 @@
     </div>
   </div>
 </div>
-<!-- Add Delete Modal -->
+<!-- Delete About Modal -->
 <div
   class="modal fade"
   id="deleteAboutModal"
-  data-bs-backdrop="static"
-  data-bs-keyboard="false"
   tabindex="-1"
   aria-labelledby="deleteAboutModalLabel"
   aria-hidden="true"
@@ -157,7 +151,7 @@
       </div>
       <div class="modal-body">
         <p>¿Realmente deseas eliminar el usuario?</p>
-        <div class="modal-footer">
+        <div class="modal-footer" *ngFor="let user of user">
           <button
             type="button"
             class="btn btn-secondary"
