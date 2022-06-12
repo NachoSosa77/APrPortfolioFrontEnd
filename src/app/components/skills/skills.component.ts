@@ -71,11 +71,12 @@ export class SkillsComponent implements OnInit {
     });
   }
 
-  public onUpdateSkill(skill: Skill): void {
+  public onUpdateSkill(skill: Skill ): void {
     this.editSkill = skill;
+    console.log(skill);
     this.skillsService.updateSkill(skill).subscribe({
-      next: (response: Skill) => {
-        console.log(response);
+      next: (res: Skill) => {
+        console.log(res);
         this.getSkill();
       },
       error: (error: HttpErrorResponse) => {
@@ -88,12 +89,12 @@ export class SkillsComponent implements OnInit {
     this.skillsService.deleteSkill(idSkill).subscribe({
       next: (response: void) => {
         console.log(response);
-        this.getSkill();
       },
       error: (error: HttpErrorResponse) => {
-        alert(error.message);
+        console.log(error.message);
       },
     });
+    console.log('Skill Delete!!');
   }
 
   public formatSubtitle = (percent: number) => {

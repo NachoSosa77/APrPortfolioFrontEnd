@@ -28,7 +28,7 @@ export class ExperienceService {
   }
 
   public updateExperience(experience:Experience): Observable<Experience>{
-    return this.http.put<Experience>(`${this.URL}/experience/edit/58`, experience);
+    return this.http.put<Experience>(`${this.URL}/experience/edit/${experience.idExper}`, experience);
   }
 
   public deleteExperience(idExper: number): Observable<void>{

@@ -23,9 +23,9 @@ export class SkillsService {
   }
 
   public updateSkill(skill: Skill): Observable<Skill> {
-    return this.http.put<Skill>(`${this.URL}/skills`, skill);
+    return this.http.put<Skill>(`${this.URL}/skills/edit/${skill.idSkill}`, skill);
   }
-  public deleteSkill(skillId: number): Observable<void> {
-    return this.http.delete<void>(`${this.URL}/skills/delete/${skillId}`);
+  public deleteSkill(idSkill: number): Observable<void> {
+    return this.http.delete<void>(`${this.URL}/skills/delete/${idSkill}`);
   }
 }

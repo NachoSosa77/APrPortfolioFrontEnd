@@ -4,20 +4,17 @@ import { Component, OnInit } from '@angular/core';
 import { Experience } from 'src/app/Model/experience.model';
 import { ExperienceService } from 'src/app/services/experience.service';
 
-
 @Component({
   selector: 'app-experience',
   templateUrl: './experience.component.html',
-  styleUrls: ['./experience.component.css']
+  styleUrls: ['./experience.component.css'],
 })
 export class ExperienceComponent implements OnInit {
-
   public experiences: Experience[] = [];
   public editExperience: Experience | undefined;
   public deleteExpe: Experience | any;
 
-
-  constructor(private experienceService: ExperienceService) { }
+  constructor(private experienceService: ExperienceService) {}
 
   ngOnInit() {
     this.getExperiences();
@@ -30,8 +27,8 @@ export class ExperienceComponent implements OnInit {
       },
       error: (error: HttpErrorResponse) => {
         console.log(error.message);
-      }
-    })
+      },
+    });
   }
 
   public openModal(mode: string, experience?: Experience): void {
@@ -48,7 +45,7 @@ export class ExperienceComponent implements OnInit {
       console.log('Experience modal delete');
     } else if (mode === 'edit') {
       this.editExperience = experience;
-      button.setAttribute('data-toggle', '#editExperienceModal')
+      button.setAttribute('data-toggle', '#editExperienceModal');
       console.log('Experience modal edit');
     }
 
@@ -67,8 +64,8 @@ export class ExperienceComponent implements OnInit {
       error: (error: HttpErrorResponse) => {
         console.log(error.message);
         addForm.reset();
-      }
-    })
+      },
+    });
   }
 
   public updateExperience(experience: Experience): void {
@@ -81,9 +78,9 @@ export class ExperienceComponent implements OnInit {
       },
       error: (error: HttpErrorResponse) => {
         alert(error.message);
-        console.log("error", experience);
-      }
-    })
+        console.log('error', experience);
+      },
+    });
     console.log('Experience Update!!');
   }
 
@@ -93,10 +90,9 @@ export class ExperienceComponent implements OnInit {
         console.log(res);
       },
       error: (error: HttpErrorResponse) => {
-        console.log("error", error.message);
-      }
-    })
+        console.log('error', error.message);
+      },
+    });
     console.log('Experience Delete!!');
   }
-
 }
