@@ -1,23 +1,13 @@
-<div class="card-body" style="width: 800px" *ngFor="let user of user">
+<div class="card-body" style="width: 800px" *ngFor="let user of users">
   <img src="{{ user.user_img }}" class="photo-perfil" alt="..." />
   <div class="card-body">
     <div class="edit-btn">
-      <button
-        type="button"
-        class="btn btn-outline-dark m-1"
-        data-bs-toggle="modal"
-        data-bs-target="#editAboutModal"
-        (click)="openModal('edit')"
-      >
+      <button type="button" class="btn btn-outline-dark m-1" data-bs-toggle="modal" data-bs-target="#editAboutModal"
+        (click)="openModal('edit', user)">
         <i class="bi bi-pencil"></i>
       </button>
-      <button
-        type="button"
-        class="btn btn-outline-dark m-1"
-        data-bs-toggle="modal"
-        data-bs-target="#deleteAboutModal"
-        (click)="openModal('delete')"
-      >
+      <button type="button" class="btn btn-outline-dark m-1" data-bs-toggle="modal" data-bs-target="#deleteAboutModal"
+        (click)="openModal('delete', user)">
         <i class="bi bi-trash"></i>
       </button>
     </div>
@@ -25,103 +15,60 @@
   <h2 class="card-title">{{ user.user_name }} {{ user.user_surname }}</h2>
   <h5 class="card-title">{{ user.user_title }}</h5>
   <p class="card-text">{{ user.user_description }}</p>
+
+  <div>
+    <a href="http://localhost:4200/experience" class="btn btn-outline-primary m-1">Experiencia</a>
+    <a href="http://localhost:4200/education" class="btn btn-outline-primary m-1">Educación</a>
+    <a href="http://localhost:4200/skills" class="btn btn-outline-primary m-1">Skills</a>
+    <a href="http://localhost:4200/projects" class="btn btn-outline-primary m-1">Proyectos</a>
+  </div>
 </div>
 
 <!-- Edit About Modal -->
-<div
-  class="modal fade"
-  id="editAboutModal"
-  tabindex="-1"
-  aria-labelledby="editAboutModalLabel"
-  aria-hidden="true"
->
+<div class="modal fade" id="editAboutModal" tabindex="-1" aria-labelledby="editAboutModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="editAboutModalLabel">Actualizar datos.</h5>
-        <button
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="modal"
-          aria-label="Close"
-        ></button>
+        <h5 class="modal-title" id="editAboutModalLabel">{{ updateUser?.idUser }}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         <form #editForm="ngForm">
+          <div>
+            <input type="hidden" ngModel="{{ updateUser?.idUser }}" name="idUser" class="form-control" id="idUser"
+              placeholder="" />
+          </div>
           <div class="form-group mt-2">
             <label for="user_name">Nombre:</label>
-            <input
-              type="text"
-              ngModel="{{ deleteAbout?.user_name }}"
-              name="user_name"
-              class="form-control"
-              id="user_name"
-              placeholder="Nombre"
-              required
-            />
+            <input type="text" ngModel="{{ updateUser?.user_name }}" name="user_name" class="form-control"
+              id="user_name" placeholder="" required />
           </div>
           <div class="form-group mt-2">
             <label for="user_surname">Apellido:</label>
-            <input
-              type="text"
-              ngModel="{{ deleteAbout?.user_surname }}"
-              name="user_surname"
-              class="form-control"
-              id="user_surname"
-              placeholder="Apellido"
-              required
-            />
+            <input type="text" ngModel="{{ updateUser?.user_surname }}" name="user_surname" class="form-control"
+              id="user_surname" placeholder="" required />
           </div>
           <div class="form-group mt-2">
             <label for="user_title">Titulo:</label>
-            <input
-              type="text"
-              ngModel="{{ deleteAbout?.user_title }}"
-              name="user_title"
-              class="form-control"
-              id="user_title"
-              placeholder="Titulo"
-              required
-            />
+            <input type="text" ngModel="{{ updateUser?.user_title }}" name="user_title" class="form-control"
+              id="user_title" placeholder="" required />
           </div>
 
           <div class="form-group mt-2">
             <label for="user_description">Descripción:</label>
-            <input
-              type="text"
-              ngModel="{{ deleteAbout?.user_description }}"
-              name="user_description"
-              class="form-control"
-              id="user_description"
-              placeholder="Descripción"
-              required
-            />
+            <input type="text" ngModel="{{ updateUser?.user_description }}" name="user_description" class="form-control"
+              id="user_description" placeholder="" required />
           </div>
           <div class="form-group mt-2">
             <label for="user_img">Imagen Url:</label>
-            <input
-              type="text"
-              ngModel="{{ deleteAbout?.user_img }}"
-              name="user_img"
-              class="form-control"
-              id="user_img"
-              placeholder="Imagen Url"
-              required
-            />
+            <input type="text" ngModel="{{ updateUser?.user_img }}" name="user_img" class="form-control" id="user_img"
+              placeholder="" required />
           </div>
           <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-secondary"
-              data-bs-dismiss="modal"
-            >
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
               Cerrar
             </button>
-            <button
-              [disabled]="editForm.invalid"
-              (click)="updateAbout(editForm.value)"
-              class="btn btn-primary"
-            >
+            <button [disabled]="editForm.invalid" (click)="updateAbout(editForm.value)" class="btn btn-primary">
               Guardar
             </button>
           </div>
@@ -131,39 +78,20 @@
   </div>
 </div>
 <!-- Delete About Modal -->
-<div
-  class="modal fade"
-  id="deleteAboutModal"
-  tabindex="-1"
-  aria-labelledby="deleteAboutModalLabel"
-  aria-hidden="true"
->
+<div class="modal fade" id="deleteAboutModal" tabindex="-1" aria-labelledby="deleteAboutModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="staticBackdropLabel">Eliminar usuario.</h5>
-        <button
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="modal"
-          aria-label="Close"
-        ></button>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         <p>¿Realmente deseas eliminar el usuario?</p>
-        <div class="modal-footer" *ngFor="let user of user">
-          <button
-            type="button"
-            class="btn btn-secondary"
-            data-bs-dismiss="modal"
-          >
+        <div class="modal-footer" *ngFor="let user of users">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
             Cancelar
           </button>
-          <button
-            type="submit"
-            class="btn btn-danger"
-            (click)="onDeleteAbout(user.idUser)"
-          >
+          <button type="submit" class="btn btn-danger" (click)="onDeleteAbout(user.idUser)" data-bs-dismiss="modal" aria-label="Close">
             Eliminar
           </button>
         </div>

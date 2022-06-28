@@ -13,7 +13,7 @@ export class BannerComponent implements OnInit {
   public user: User[] = [];
   constructor(private userService: UserService) {}
 
-  ngOnInit(): void {
+  ngOnInit(): void{
     this.getUsers();
   }
 
@@ -47,11 +47,12 @@ export class BannerComponent implements OnInit {
     this.userService.newUser(addForm.value).subscribe({
       next: (res: User) => {
         console.log(res);
+        this.getUsers();
         addForm.reset();
+
       },
       error: (error: HttpErrorResponse) => {
         console.log(error.message);
-        this.getUsers();
         addForm.reset();
       },
     });

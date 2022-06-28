@@ -13,9 +13,11 @@
         >
           <i class="bi bi-plus-lg"></i>
         </button>
-        <button class="btn btn-outline-dark m-1">
+
+        <button class="btn btn-outline-dark m-1" *ngIf="experiences.length >= 1">
           <i class="bi bi-pencil"></i>
         </button>
+
       </div>
       </div>
 
@@ -150,7 +152,7 @@
             />
           </div>
           <div class="modal-footer">
-            <button type="submit" class="btn btn-primary">Guardar</button>
+            <button type="submit" class="btn btn-primary" [disabled]="addForm.invalid" data-bs-toggle="modal" data-bs-target="#addExperienceModal">Guardar</button>
           </div>
         </form>
       </div>
@@ -251,8 +253,7 @@
             <button
               class="btn btn-primary"
               (click)="updateExperience(editForm.value)"
-              data-dismiss="modal"
-            >
+              [disabled]="addForm.invalid" data-bs-toggle="modal" data-bs-target="#editExperienceModal"[disabled]="editForm.invalid">
               Guardar los cambios
             </button>
           </div>

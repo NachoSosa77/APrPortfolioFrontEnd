@@ -10,20 +10,20 @@ import { HttpErrorResponse } from '@angular/common/http';
   styleUrls: ['./about.component.css'],
 })
 export class AboutComponent implements OnInit {
-  public user: User[] = [];
+  public users: User[] = [];
   public deleteAbout: User | undefined;
   public updateUser: User | undefined;
 
   constructor(private userService: UserService) {}
 
-  ngOnInit(): void {
+  ngOnInit(): void{
     this.getUsers();
   }
 
   public getUsers() {
     this.userService.getUser().subscribe({
       next: (res: User[]) => {
-        this.user = res;
+        this.users = res;
       },
       error: (error: HttpErrorResponse) => {
         console.log('error', error.message);
@@ -55,6 +55,7 @@ export class AboutComponent implements OnInit {
       next: (res: User) => {
         console.log(res);
         addForm.reset();
+        this.ngOnInit();
       },
       error: (error: HttpErrorResponse) => {
         console.log(error.message);
@@ -72,6 +73,7 @@ export class AboutComponent implements OnInit {
         console.log(response);
         this.getUsers();
         console.log(user);
+        this.ngOnInit();
       },
       error: (error: HttpErrorResponse) => {
         alert(error.message);
@@ -86,6 +88,7 @@ export class AboutComponent implements OnInit {
     this.userService.deleteUser(idUser).subscribe({
       next: (res: void) => {
         console.log(res);
+
       },
       error: (error: HttpErrorResponse) => {
         console.log(error.message);
